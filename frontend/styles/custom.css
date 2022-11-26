@@ -1,0 +1,15 @@
+.main-background {
+  background-color: #f4e7e0;
+  height: 100vh;
+}
+
+.main-logo {
+  color: #966467;
+  font-size: 4rem;
+}
+
+@media (max-width: 768px) {
+  .main-logo {
+    font-size: 2rem;
+  }
+}
