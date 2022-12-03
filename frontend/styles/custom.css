@@ -1,15 +1,43 @@
+:root {
+  --primary: #f4e7e0;
+  --secondary: #966467;
+  --white: #ffffff;
+  --black: #000000;
+}
+
 .main-background {
-  background-color: #f4e7e0;
+  background-color: var(--primary);
   height: 100vh;
 }
 
 .main-logo {
-  color: #966467;
+  color: var(--secondary);
   font-size: 4rem;
+}
+
+.submit-btn {
+  background-color: var(--secondary);
+  color: var(--white);
+  border: none;
+}
+
+.navbarlink {
+  color: var(--black);
+}
+
+.navbarlink:hover {
+  color: var(--secondary);
+}
+
+.custom-input {
+  width: 50%;
 }
 
 @media (max-width: 768px) {
   .main-logo {
     font-size: 2rem;
+  }
+  .custom-input {
+    width: 100%;
   }
 }
