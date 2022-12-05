@@ -1,12 +1,12 @@
 import { Button } from "../components/Button";
 import { MainTemplate } from "../templates/MainTemplate";
 
-const Login = () => {
+const Register = () => {
   return (
     <MainTemplate>
       <>
         <div className="container-fluid pt-3">
-          <h2 className="text-center pb-2">Sign in</h2>
+          <h2 className="text-center pb-2">Sign up</h2>
           <form className="mx-auto w-25">
             <div className="mb-2">
               <label
@@ -30,7 +30,7 @@ const Login = () => {
               <input type="password" className="form-control" id="password" />
             </div>
             <Button
-              text="Sign in"
+              text="Sign up"
               styles="d-flex w-100 mt-4 justify-content-center"
             />
           </form>
@@ -40,4 +40,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Register;

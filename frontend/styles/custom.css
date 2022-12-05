@@ -1,8 +1,13 @@
 :root {
   --primary: #f4e7e0;
   --secondary: #966467;
+  --seconadry-hover: #af767a;
   --white: #ffffff;
   --black: #000000;
+}
+
+* {
+  font-family: "Roboto", sans-serif;
 }
 
 .main-background {
@@ -13,6 +18,7 @@
 .main-logo {
   color: var(--secondary);
   font-size: 4rem;
+  font-family: "Cormorant SC", serif;
 }
 
 .submit-btn {
@@ -21,7 +27,11 @@
   border: none;
 }
 
-.navbarlink {
+.submit-btn:hover {
+  background-color: var(--seconadry-hover);
+}
+
+.navbartext {
   color: var(--black);
 }
 
