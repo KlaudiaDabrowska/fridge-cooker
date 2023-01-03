@@ -17,3 +17,17 @@ export const GET_ALL_RECIPES = gql`
     }
   }
 `;
+
+export const GET_RECIPES_BY_INGREDIENT = gql`
+  query GET_RECIPES_BY_INGREDIENT($ingredient: String!) {
+    recipes(filters: { ingredients: { name: { eq: $ingredient } } }) {
+      data {
+        attributes {
+          name
+          imageUrl
+          url
+        }
+      }
+    }
+  }
+`;

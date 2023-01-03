@@ -1,6 +1,10 @@
 import { Button } from "./Button";
 import { useFormik } from "formik";
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import { useQuery } from "@apollo/client";
+import { GET_RECIPES_BY_INGREDIENT } from "../graphql/query/recipes";
+import { RecipeItem } from "./RecipeItem";
+import { IRecipeItem } from "../types/IRecipeItem";
 
 export const SearchInput = () => {
   const [ingredients, setIngredients] = useState<string>();
@@ -15,9 +19,13 @@ export const SearchInput = () => {
     },
   });
 
-  useEffect(() => {
-    console.log(ingredients);
-  }, [ingredients]);
+  const { data } = useQuery(GET_RECIPES_BY_INGREDIENT, {
+    variables: {
+      ingredient: ingredients,
+    },
+  });
+
+  console.log(data);
 
   return (
     <div className="container-fluid pt-1 pb-5 mb-5">
@@ -36,6 +44,22 @@ export const SearchInput = () => {
           />
           <Button text="Search" styles="ms-2" />
         </div>
+
+        {data &&
+          data.recipes.data.map((recipe: IRecipeItem, index: number) => {
+            return (
+              <RecipeItem
+                name={recipe.attributes.name}
+                imageUrl={recipe.attributes.imageUrl}
+                url={recipe.attributes.url}
+                key={index}
+              />
+            );
+          })}
+
+        {data && data.recipes.data.length == 0 && (
+          <div>Sorry, we couldn`t find any recipe</div>
+        )}
       </form>
     </div>
   );
