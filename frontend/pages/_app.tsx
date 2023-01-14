@@ -7,6 +7,7 @@ import {
   ApolloProvider,
   gql,
 } from "@apollo/client";
+import { SessionProvider } from "next-auth/react";
 
 const client = new ApolloClient({
   uri: `${process.env.NEXT_PUBLIC_STRAPI_URL}/graphql`,
@@ -17,12 +18,17 @@ const client = new ApolloClient({
   cache: new InMemoryCache(),
 });
 
-export default function App({ Component, pageProps }: AppProps) {
+export default function App({
+  Component,
+  pageProps: { session, ...pageProps },
+}: AppProps) {
   return (
-    <ApolloProvider client={client}>
-      <div className="main-background">
-        <Component {...pageProps} />
-      </div>
-    </ApolloProvider>
+    <SessionProvider session={session}>
+      <ApolloProvider client={client}>
+        <div className="main-background">
+          <Component {...pageProps} />
+        </div>
+      </ApolloProvider>
+    </SessionProvider>
   );
 }

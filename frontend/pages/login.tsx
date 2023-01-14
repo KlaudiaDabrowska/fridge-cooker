@@ -1,7 +1,30 @@
 import { Button } from "../components/Button";
 import { MainTemplate } from "../templates/MainTemplate";
+import { useFormik } from "formik";
+import * as Yup from "yup";
+import { signIn } from "next-auth/react";
 
 const Login = () => {
+  const formik = useFormik({
+    initialValues: {
+      email: "",
+      password: "",
+    },
+    validationSchema: Yup.object({
+      email: Yup.string().email("Invalid email address").required("Required"),
+      password: Yup.string()
+        .min(6, "Must be at least 6 characters")
+        .required("Required"),
+    }),
+    onSubmit: async (values, actions) => {
+      try {
+        signIn();
+      } catch (e) {
+        console.log(e);
+      }
+      actions.resetForm({ values: { email: "", password: "" } });
+    },
+  });
   return (
     <MainTemplate>
       <>
@@ -20,14 +43,22 @@ const Login = () => {
                 type="email"
                 className="form-control"
                 id="email"
-                aria-describedby="emailHelp"
+                aria-describedby="email"
+                onChange={formik.handleChange}
+                value={formik.values.email}
               />
             </div>
             <div className="mb-3">
               <label htmlFor="password" className="form-label">
                 Password
               </label>
-              <input type="password" className="form-control" id="password" />
+              <input
+                type="password"
+                className="form-control"
+                id="password"
+                onChange={formik.handleChange}
+                value={formik.values.password}
+              />
             </div>
             <Button
               text="Sign in"
