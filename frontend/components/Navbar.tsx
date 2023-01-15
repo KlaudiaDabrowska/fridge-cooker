@@ -4,7 +4,7 @@ import { NavbarLink } from "./NavbarLink";
 
 export const Navbar = () => {
   //hardcoded
-  const isLoggedin = true;
+  const isLoggedin = false;
 
   const [show, setShow] = useState(false);
 

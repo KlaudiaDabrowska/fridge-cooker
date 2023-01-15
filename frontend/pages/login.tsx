@@ -2,9 +2,12 @@ import { Button } from "../components/Button";
 import { MainTemplate } from "../templates/MainTemplate";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { signIn } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
+import { useState } from "react";
 
 const Login = () => {
+  const [loginError, setLoginError] = useState("");
+
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -17,11 +20,19 @@ const Login = () => {
         .required("Required"),
     }),
     onSubmit: async (values, actions) => {
-      try {
-        signIn();
-      } catch (e) {
-        console.log(e);
-      }
+      await signIn("credentials", {
+        redirect: false,
+        email: values.email,
+        password: values.password,
+      })
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((err) => {
+          console.log(err);
+          setLoginError(err);
+        });
+
       actions.resetForm({ values: { email: "", password: "" } });
     },
   });
@@ -30,7 +41,7 @@ const Login = () => {
       <>
         <div className="container-fluid pt-3">
           <h2 className="text-center pb-2">Sign in</h2>
-          <form className="mx-auto w-25">
+          <form className="mx-auto w-25" onSubmit={formik.handleSubmit}>
             <div className="mb-2">
               <label
                 htmlFor="email"
@@ -47,6 +58,9 @@ const Login = () => {
                 onChange={formik.handleChange}
                 value={formik.values.email}
               />
+              {formik.touched.email && formik.errors.email && (
+                <div className="text-danger">{formik.errors.email}</div>
+              )}
             </div>
             <div className="mb-3">
               <label htmlFor="password" className="form-label">
@@ -59,7 +73,11 @@ const Login = () => {
                 onChange={formik.handleChange}
                 value={formik.values.password}
               />
+              {formik.touched.password && formik.errors.password && (
+                <div className="text-danger">{formik.errors.password}</div>
+              )}
             </div>
+            {loginError && <div className="text-danger">{loginError}</div>}
             <Button
               text="Sign in"
               styles="d-flex w-100 mt-4 justify-content-center"
