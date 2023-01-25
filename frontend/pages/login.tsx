@@ -7,6 +7,10 @@ import { useState } from "react";
 
 const Login = () => {
   const [loginError, setLoginError] = useState("");
+  const { data } = useSession();
+
+  console.log("DATA");
+  console.log(data);
 
   const formik = useFormik({
     initialValues: {
