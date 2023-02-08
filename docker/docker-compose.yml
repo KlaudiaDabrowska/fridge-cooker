@@ -1,0 +1,18 @@
+version: "3.7"
+
+services:
+  fridge-cooker-db:
+    image: postgres
+    container_name: fridge-cooker-db
+    environment:
+      - POSTGRES_DB=fridge-cooker
+      - POSTGRES_USER=fridge-cooker-user
+      - POSTGRES_PASSWORD=test
+    volumes:
+      - fridge-cooker-db-data:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+    restart: always
+
+volumes:
+  fridge-cooker-db-data:
