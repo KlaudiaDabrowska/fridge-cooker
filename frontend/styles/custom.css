@@ -4,15 +4,31 @@
   --seconadry-hover: #af767a;
   --white: #ffffff;
   --black: #000000;
+  --sec: #ffe4c4;
+  --light-sec: rgba(255, 228, 196, 0.2);
+  --dark-sec: #ffd5c4;
 }
 
 * {
-  font-family: "Roboto", sans-serif;
+  font-family: "Radley", serif;
 }
 
 .main-background {
-  background-color: var(--primary);
-  height: 100%;
+  background-color: var(--white);
+}
+
+.secondary-background {
+  background-color: var(--light-sec);
+}
+
+.custom-btn {
+  color: black;
+  border: none;
+  background-color: transparent;
+}
+
+.custom-btn:hover {
+  color: var(--dark-sec);
 }
 
 .main-logo {
@@ -22,9 +38,9 @@
 }
 
 .submit-btn {
-  background-color: var(--secondary);
-  color: var(--white);
-  border: none;
+  background-color: var(--sec);
+  color: var(--black);
+  border: 1px solid black;
 }
 
 .submit-btn:hover {
@@ -49,5 +65,44 @@
   }
   .custom-input {
     width: 100%;
+  }
+}
+
+.sign-btn {
+  font-size: 16px;
+  font-weight: 200;
+  letter-spacing: 1px;
+  padding: 13px 20px 13px;
+  outline: 0;
+  border: 1px solid black;
+  cursor: pointer;
+  position: relative;
+  background-color: rgba(0, 0, 0, 0);
+  user-select: none;
+  z-index: 1;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+.sign-btn:after {
+  content: "";
+  background-color: var(--sec);
+  width: 100%;
+  z-index: -1;
+  position: absolute;
+  height: 100%;
+  bottom: -6px;
+  left: 8px;
+  transition: 0.3s;
+}
+
+.sign-btn:hover:after {
+  top: 0px;
+  left: 0px;
+}
+
+@media (min-width: 768px) {
+  .sign-btn {
+    padding: 13px 50px 13px;
   }
 }

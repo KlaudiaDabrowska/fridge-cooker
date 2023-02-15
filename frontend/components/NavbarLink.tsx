@@ -11,7 +11,7 @@ export const NavbarLink = ({ href, text }: INavbarLinkProps) => {
       <Link
         href={href}
         passHref
-        className="text-decoration-none fs-5 navbartext"
+        className="text-decoration-none fs-5 navbartext secondary-text"
       >
         {text}
       </Link>
