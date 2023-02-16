@@ -2,11 +2,8 @@ import { useFormik } from "formik";
 import { useState } from "react";
 import { useQuery } from "@apollo/client";
 import { GET_RECIPES_BY_INGREDIENT } from "../graphql/query/recipes";
-import { RecipeItem } from "./RecipeItem";
-import { IRecipeItem } from "../types/IRecipeItem";
 import { FaSearch } from "react-icons/fa";
-import Image from "next/image";
-import warning from "../public/img/warning.png";
+import { SearchResult } from "./SearchResult";
 
 export const SearchInput = () => {
   const [ingredients, setIngredients] = useState<string>();
@@ -28,9 +25,9 @@ export const SearchInput = () => {
   });
 
   return (
-    <div className="d-flex w-50 align-items-center">
+    <div className="d-flex justify-content-center w-75 mx-auto">
       <form
-        className="mx-auto w-100 custom-input"
+        className="custom-input"
         onSubmit={formik.handleSubmit}
         onKeyUp={(e) => {
           if (e.key === "Enter") {
@@ -53,35 +50,7 @@ export const SearchInput = () => {
             value={formik.values.ingredients}
           />
         </div>
-
-        {data &&
-          data.recipes.data.map((recipe: IRecipeItem, index: number) => {
-            return (
-              <RecipeItem
-                name={recipe.attributes.name}
-                imageUrl={recipe.attributes.imageUrl}
-                url={recipe.attributes.url}
-                key={index}
-              />
-            );
-          })}
-
-        {data && data.recipes.data.length == 0 && (
-          <div className="justify-content-center mt-1 d-sm-flex d-none ">
-            <div className="d-flex flex-column justify-content-center align-items-center me-3">
-              <Image
-                src={warning}
-                alt="warning"
-                height={200}
-                width={200}
-                className="ms-3"
-              />{" "}
-            </div>
-            <div className="d-flex align-items-center">
-              Sorry, we couldn`t find any recipe
-            </div>
-          </div>
-        )}
+        <SearchResult recipesData={data} />
       </form>
     </div>
   );
