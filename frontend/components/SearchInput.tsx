@@ -1,10 +1,9 @@
-import { Button } from "./Button";
 import { useFormik } from "formik";
 import { useState } from "react";
 import { useQuery } from "@apollo/client";
 import { GET_RECIPES_BY_INGREDIENT } from "../graphql/query/recipes";
-import { RecipeItem } from "./RecipeItem";
-import { IRecipeItem } from "../types/IRecipeItem";
+import { FaSearch } from "react-icons/fa";
+import { SearchResult } from "./SearchResult";
 
 export const SearchInput = () => {
   const [ingredients, setIngredients] = useState<string>();
@@ -25,41 +24,33 @@ export const SearchInput = () => {
     },
   });
 
-  console.log(data);
-
   return (
-    <div className="container-fluid pt-1 pb-5 mb-5">
-      <form className="mx-auto custom-input" onSubmit={formik.handleSubmit}>
-        <div className="input-group mb-3">
+    <div className="d-flex justify-content-center w-75 mx-auto">
+      <form
+        className="custom-input"
+        onSubmit={formik.handleSubmit}
+        onKeyUp={(e) => {
+          if (e.key === "Enter") {
+            formik.handleSubmit();
+          }
+        }}
+      >
+        <div className="input-group mb-3 border border-2 rounded">
           <label htmlFor="ingredients" className="form-label" />
-
+          <div className="position-relative p-2 d-flex align-items-center">
+            <FaSearch className="text-secondary" />
+          </div>
           <input
             type="text"
-            className="form-control rounded"
+            className="form-control position-relative border-0"
             id="ingredients"
             aria-describedby="ingredients"
             placeholder="eggs, beckon, milk...."
             onChange={formik.handleChange}
             value={formik.values.ingredients}
           />
-          <Button text="Search" styles="ms-2" />
         </div>
-
-        {data &&
-          data.recipes.data.map((recipe: IRecipeItem, index: number) => {
-            return (
-              <RecipeItem
-                name={recipe.attributes.name}
-                imageUrl={recipe.attributes.imageUrl}
-                url={recipe.attributes.url}
-                key={index}
-              />
-            );
-          })}
-
-        {data && data.recipes.data.length == 0 && (
-          <div>Sorry, we couldn`t find any recipe</div>
-        )}
+        <SearchResult recipesData={data} />
       </form>
     </div>
   );

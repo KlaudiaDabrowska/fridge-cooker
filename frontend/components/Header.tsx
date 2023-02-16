@@ -1,9 +1,19 @@
-import Link from "next/link";
+import Image from "next/image";
+import headerText from "../public/img/headerText2.png";
 
 export const Header = () => {
   return (
-    <Link href="/" style={{ textDecoration: "none" }}>
-      <h3 className="text-center m-5 main-logo">~ FRIDGE COOKER ~</h3>
-    </Link>
+    <>
+      <div className="d-flex justify-content-center">
+        <Image
+          src={headerText}
+          alt="headerText"
+          height={400}
+          width={400}
+          quality={100}
+          className="ms-3"
+        />
+      </div>
+    </>
   );
 };
